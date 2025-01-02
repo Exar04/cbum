@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+
+  nginx:
+    image: nginx:latest
+    container_name: load_bala
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_PORT=80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - serv1
+      - serv2
+
+  redis-ws:
+    image: redis:6.2-alpine
+    container_name: redis-ws
+    ports:
+      - 6379:6379
+
+  serv1:
+    build: ./chat_server
+    container_name: serv1
+    ports:
+      - 9000:9000
+    depends_on:
+      - redis-ws
+
+  serv2:
+    build: ./chat_server
+    container_name: serv2
+    ports:
+      - 9001:9000
+    depends_on:
+      - redis-ws

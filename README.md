@@ -35,4 +35,4 @@ To test it use following data in postman -
 ```
 
 # Architecture - 
-<img src="backendArchitecture.png"/>
+<img src="images/backendArchitecture.png"/>

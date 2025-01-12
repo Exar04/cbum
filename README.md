@@ -33,3 +33,6 @@ To test it use following data in postman -
 	"Sender" : "yan"
 }
 ```
+
+# Architecture - 
+<img src="backendArchitecture.png"/>

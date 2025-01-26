@@ -1,0 +1,3 @@
+Add support to rabbitmq and DB
+Crate http server that serves messages
+Add support for grafana loki and prometheous

@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/websocket"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -78,6 +79,7 @@ func main() {
 	Rstore.SubRedis()
 
 	http.HandleFunc("/ws", SocketHandler)
+	http.Handle("/metrics", promhttp.Handler())
 	fmt.Println("web soc running on port 9000")
 	err := http.ListenAndServe(":9000", nil)
 	if err != nil {

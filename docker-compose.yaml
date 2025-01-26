@@ -19,6 +19,17 @@ services:
     container_name: redis-ws
     ports:
       - 6379:6379
+  
+  postgres-chatdb:
+    image: postgres:15.3-alpine
+    container_name: chatdb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: yash 
+      POSTGRES_PASSWORD: yash 
+      POSTGRES_DB: chatdb 
+    restart: always
 
   serv1:
     build: ./chat_server
@@ -35,3 +46,22 @@ services:
       - 9001:9000
     depends_on:
       - redis-ws
+  
+  msg-consumer:
+    build: ./msgConsumer
+    container_name: msg_consumer
+    environment:
+      POSTGRES_HOST: postgres-chatdb
+      POSTGRES_USER: yash 
+      POSTGRES_PASSWORD: yash 
+      POSTGRES_PORT: 5432
+      POSTGRES_NAME: chatdb 
+    depends_on:
+      - redis-ws
+      - postgres-chatdb
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8880:8080
